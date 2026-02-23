@@ -1,135 +1,124 @@
-# Turborepo starter
+# 🚀 MISP Project Setup
 
-This Turborepo starter is maintained by the Turborepo core team.
+Welcome! Follow these steps to get the development environment running on your machine.
 
-## Using this example
+---
 
-Run the following command:
+## 📋 Prerequisites
 
-```sh
-npx create-turbo@latest
+- **Node.js**: v18 or higher  
+- **Docker Desktop**: Installed and running  
+- **Yarn**: `npm install -g yarn`  
+
+---
+
+## 🛠 1. Environment Configuration
+
+You need to create `.env` files for the root and the sub-apps. Run this command in your terminal at the project root:
+
+```bash
+# Mac/Linux
+cp .env.example .env && \
+cp apps/backend/.env.example apps/backend/.env && \
+cp apps/frontend/.env.example apps/frontend/.env
 ```
 
-## What's inside?
-
-This Turborepo includes the following packages/apps:
-
-### Apps and Packages
-
-- `docs`: a [Next.js](https://nextjs.org/) app
-- `web`: another [Next.js](https://nextjs.org/) app
-- `@repo/ui`: a stub React component library shared by both `web` and `docs` applications
-- `@repo/eslint-config`: `eslint` configurations (includes `eslint-config-next` and `eslint-config-prettier`)
-- `@repo/typescript-config`: `tsconfig.json`s used throughout the monorepo
-
-Each package/app is 100% [TypeScript](https://www.typescriptlang.org/).
-
-### Utilities
-
-This Turborepo has some additional tools already setup for you:
-
-- [TypeScript](https://www.typescriptlang.org/) for static type checking
-- [ESLint](https://eslint.org/) for code linting
-- [Prettier](https://prettier.io) for code formatting
-
-### Build
-
-To build all apps and packages, run the following command:
+**Important Settings:**  
+Open `apps/backend/.env` and ensure the following are set to avoid conflicts with local databases:
 
 ```
-cd my-turborepo
-
-# With [global `turbo`](https://turborepo.dev/docs/getting-started/installation#global-installation) installed (recommended)
-turbo build
-
-# Without [global `turbo`](https://turborepo.dev/docs/getting-started/installation#global-installation), use your package manager
-npx turbo build
-yarn dlx turbo build
-pnpm exec turbo build
+DB_PORT=5435
+DB_USER=postgres
+DB_PASSWORD=misp_local_123
 ```
 
-You can build a specific package by using a [filter](https://turborepo.dev/docs/crafting-your-repository/running-tasks#using-filters):
+---
 
-```
-# With [global `turbo`](https://turborepo.dev/docs/getting-started/installation#global-installation) installed (recommended)
-turbo build --filter=docs
+## 📦 2. Install Dependencies
 
-# Without [global `turbo`](https://turborepo.dev/docs/getting-started/installation#global-installation), use your package manager
-npx turbo build --filter=docs
-yarn exec turbo build --filter=docs
-pnpm exec turbo build --filter=docs
+From the root directory, run:
+
+```bash
+yarn install
 ```
 
-### Develop
+---
 
-To develop all apps and packages, run the following command:
+## 🐳 3. Start the Database
 
-```
-cd my-turborepo
+Make sure Docker Desktop is open, then run:
 
-# With [global `turbo`](https://turborepo.dev/docs/getting-started/installation#global-installation) installed (recommended)
-turbo dev
-
-# Without [global `turbo`](https://turborepo.dev/docs/getting-started/installation#global-installation), use your package manager
-npx turbo dev
-yarn exec turbo dev
-pnpm exec turbo dev
+```bash
+docker-compose up -d
 ```
 
-You can develop a specific package by using a [filter](https://turborepo.dev/docs/crafting-your-repository/running-tasks#using-filters):
+The database will be available at `localhost:5435`.
 
+---
+
+## 🏃 4. Run the Application
+
+To start both the Frontend and Backend run:
+
+```bash
+yarn dev:frontend
 ```
-# With [global `turbo`](https://turborepo.dev/docs/getting-started/installation#global-installation) installed (recommended)
-turbo dev --filter=web
-
-# Without [global `turbo`](https://turborepo.dev/docs/getting-started/installation#global-installation), use your package manager
-npx turbo dev --filter=web
-yarn exec turbo dev --filter=web
-pnpm exec turbo dev --filter=web
-```
-
-### Remote Caching
-
-> [!TIP]
-> Vercel Remote Cache is free for all plans. Get started today at [vercel.com](https://vercel.com/signup?/signup?utm_source=remote-cache-sdk&utm_campaign=free_remote_cache).
-
-Turborepo can use a technique known as [Remote Caching](https://turborepo.dev/docs/core-concepts/remote-caching) to share cache artifacts across machines, enabling you to share build caches with your team and CI/CD pipelines.
-
-By default, Turborepo will cache locally. To enable Remote Caching you will need an account with Vercel. If you don't have an account you can [create one](https://vercel.com/signup?utm_source=turborepo-examples), then enter the following commands:
-
-```
-cd my-turborepo
-
-# With [global `turbo`](https://turborepo.dev/docs/getting-started/installation#global-installation) installed (recommended)
-turbo login
-
-# Without [global `turbo`](https://turborepo.dev/docs/getting-started/installation#global-installation), use your package manager
-npx turbo login
-yarn exec turbo login
-pnpm exec turbo login
+and
+```bash
+yarn dev:backend
 ```
 
-This will authenticate the Turborepo CLI with your [Vercel account](https://vercel.com/docs/concepts/personal-accounts/overview).
+- Frontend: [http://localhost:3000](http://localhost:3000)  
+- Backend API: [http://localhost:3001](http://localhost:3001)
 
-Next, you can link your Turborepo to your Remote Cache by running the following command from the root of your Turborepo:
+---
+
+## 🆘 Troubleshooting
+
+| Issue                        | Solution                                                                 |
+|------------------------------|--------------------------------------------------------------------------|
+| Terminal Hangs / Freezes     | Check your disk space! If you are at 100% capacity, Node will not start. |
+| Port 5432 or 5435 in use     | Change `DB_PORT` in `.env` and `docker-compose.yml` to 5436.             |
+| Database Connection Error    | Run `docker-compose down -v` then `docker-compose up -d` to reset volume.|
+| Missing required variables   | Ensure you didn't skip Step 1. Check your `.env` files for empty values. |
+
+---
+
+## 🏗 Project Structure
 
 ```
-# With [global `turbo`](https://turborepo.dev/docs/getting-started/installation#global-installation) installed (recommended)
-turbo link
-
-# Without [global `turbo`](https://turborepo.dev/docs/getting-started/installation#global-installation), use your package manager
-npx turbo link
-yarn exec turbo link
-pnpm exec turbo link
-```
-
-## Useful Links
-
-Learn more about the power of Turborepo:
-
-- [Tasks](https://turborepo.dev/docs/crafting-your-repository/running-tasks)
-- [Caching](https://turborepo.dev/docs/crafting-your-repository/caching)
-- [Remote Caching](https://turborepo.dev/docs/core-concepts/remote-caching)
-- [Filtering](https://turborepo.dev/docs/crafting-your-repository/running-tasks#using-filters)
-- [Configuration Options](https://turborepo.dev/docs/reference/configuration)
-- [CLI Usage](https://turborepo.dev/docs/reference/command-line-reference)
+misp-repo/
+├── apps/
+│   ├── frontend/                 # Next.js Application
+│   │   ├── src/
+│   │   │   ├── app/              # Standard Next.js routing
+│   │   │   ├── domains/          # 🔒 ISOLATED FRONTEND MODULES
+│   │   │   │   ├── user/         # User team 
+│   │   │   │   ├── accounts/     # Accounts team 
+│   │   │   │   ├── services/     # Services team 
+│   │   │   │   ├── dispatch/     # Dispatch team 
+│   │   │   │   └── fieldops/     # FieldOps team 
+│   │   │   ├── api-client/       # Auto-generated from NestJS Swagger
+│   │   │   └── env.ts            # Zod validation for frontend envs
+│   │   └── .env.example
+│   │
+│   └── backend/                  # NestJS Application
+│       ├── src/                  # 🔒 ISOLATED BACKEND MODULES
+│       │   ├── user/             # User team 
+│       │   ├── accounts/         # Accounts team 
+│       │   ├── services/         # Services team 
+│       │   ├── dispatch/         # Dispatch team 
+│       │   ├── fieldops/         # FieldOps team 
+│       │   ├── core/             # Shared guards/interceptors
+│       │   └── env.validation.ts # Zod validation for backend envs
+│       ├── typeorm/              # Migrations (Managed by Data Engineer) 
+│       └── .env.example
+│
+├── packages/                     # 📦 SHARED MONOREPO CODE
+│   ├── ui/                       # Reusable React components (Buttons, Layouts)
+│   ├── types/                    # Shared universal TypeScript interfaces
+│   └── eslint-config/            # Shared linting rules
+│
+├── docker-compose.yml            # Local Postgres & pgAdmin setup
+└── .github/
+    └── CODEOWNERS                # Pull Request approval enforcement

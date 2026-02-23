@@ -1,0 +1,1 @@
+//TODO: Setup zod for frontend env validation

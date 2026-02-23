@@ -15,10 +15,9 @@ import { validate } from './env.validation';
       inject: [ConfigService],
       useFactory: (configService: ConfigService) => ({
         type: 'postgres',
-        url: configService.get<string>('DATABASE_URL'),
+        url: `postgresql://${configService.get('DB_USER')}:${configService.get('DB_PASSWORD')}@${configService.get('DB_HOST')}:${configService.get('DB_PORT')}/${configService.get('DB_NAME')}`,
         autoLoadEntities: true,
-
-        synchronize: configService.get<string>('NODE_ENV') === 'development',
+        synchronize: configService.get('NODE_ENV') === 'development',
       }),
     }),
   ],
