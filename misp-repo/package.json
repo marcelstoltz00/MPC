@@ -10,6 +10,7 @@
     "dev:backend": "yarn workspace backend dev",
     "dev:frontend": "yarn workspace frontend dev",
     "build": "yarn workspaces run build",
+    "dev:mobile": "yarn workspace field-ops-pwa dev",
     "lint": "yarn workspaces run lint"
   },
   "devDependencies": {

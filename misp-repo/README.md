@@ -89,36 +89,81 @@ yarn dev:backend
 ```
 misp-repo/
 ├── apps/
-│   ├── frontend/                 # Next.js Application
+│   ├── backend/                  # NestJS Application
 │   │   ├── src/
-│   │   │   ├── app/              # Standard Next.js routing
-│   │   │   ├── domains/          # 🔒 ISOLATED FRONTEND MODULES
-│   │   │   │   ├── user/         # User team 
-│   │   │   │   ├── accounts/     # Accounts team 
-│   │   │   │   ├── services/     # Services team 
-│   │   │   │   ├── dispatch/     # Dispatch team 
-│   │   │   │   └── fieldops/     # FieldOps team 
-│   │   │   ├── api-client/       # Auto-generated from NestJS Swagger
-│   │   │   └── env.ts            # Zod validation for frontend envs
+│   │   │   ├── app.controller.ts
+│   │   │   ├── app.module.ts
+│   │   │   ├── app.service.ts
+│   │   │   ├── env.validation.ts # Zod validation for backend envs
+│   │   │   ├── main.ts
+│   │   │   ├── user/             # User team
+│   │   │   ├── accounts/         # Accounts team
+│   │   │   ├── services/         # Services team
+│   │   │   ├── dispatch/         # Dispatch team
+│   │   │   └── fieldops/         # FieldOps team
+│   │   ├── test/
+│   │   ├── package.json
 │   │   └── .env.example
-│   │
-│   └── backend/                  # NestJS Application
-│       ├── src/                  # 🔒 ISOLATED BACKEND MODULES
-│       │   ├── user/             # User team 
-│       │   ├── accounts/         # Accounts team 
-│       │   ├── services/         # Services team 
-│       │   ├── dispatch/         # Dispatch team 
-│       │   ├── fieldops/         # FieldOps team 
-│       │   ├── core/             # Shared guards/interceptors
-│       │   └── env.validation.ts # Zod validation for backend envs
-│       ├── typeorm/              # Migrations (Managed by Data Engineer) 
-│       └── .env.example
+│   ├── frontend/                 # Next.js Application
+│   │   ├── app/
+│   │   │   ├── globals.css
+│   │   │   ├── layout.tsx
+│   │   │   └── page.tsx
+│   │   ├── src/
+│   │   │   ├── env.ts            # Zod validation for frontend envs
+│   │   │   └── domains/
+│   │   │       ├── user/         # User team
+│   │   │       ├── accounts/     # Accounts team
+│   │   │       ├── services/     # Services team
+│   │   │       ├── dispatch/     # Dispatch team
+│   │   │       └── fieldops/     # FieldOps team
+│   │   │   └── ...               # Other frontend modules
+│   │   ├── public/
+│   │   ├── package.json
+│   │   └── .env.example
+│   ├── field-ops-pwa/            # FieldOps Progressive Web App
+│   │   ├── public/
+│   │   ├── package.json
+│   │   ├── next.config.mjs
+│   │   └── ...                   # PWA source files
 │
 ├── packages/                     # 📦 SHARED MONOREPO CODE
 │   ├── ui/                       # Reusable React components (Buttons, Layouts)
-│   ├── types/                    # Shared universal TypeScript interfaces
-│   └── eslint-config/            # Shared linting rules
+│   │   ├── src/
+│   │   │   ├── button.tsx
+│   │   │   ├── card.tsx
+│   │   │   └── code.tsx
+│   │   └── package.json
+│   ├── typescript-config/        # Shared TypeScript configs
+│   │   ├── base.json
+│   │   ├── nextjs.json
+│   │   └── react-library.json
+│   ├── eslint-config/            # Shared linting rules
+│   │   ├── base.js
+│   │   ├── next.js
+│   │   └── react-internal.js
+│   │   └── package.json
 │
 ├── docker-compose.yml            # Local Postgres & pgAdmin setup
+├── package.json                  # Root package
+├── README.md                     # Project documentation
 └── .github/
     └── CODEOWNERS                # Pull Request approval enforcement
+```
+---
+
+### 📱 FieldOps Mobile Team (PWA)
+- **App Directory**: `apps/field-ops-pwa`
+- **Port**: `3002`
+- **Command**: `yarn dev:mobile`
+- **Offline Sync**: This app uses `@ducanh2912/next-pwa`. To test offline capabilities:
+    1. Develop UI: Run `yarn dev:mobile` (hot-reloading).
+    2. Test Offline:
+         - Open terminal and run:
+             ```bash
+             cd apps/field-ops-pwa
+             yarn build
+             yarn start
+             ```
+         - Open Chrome DevTools → Application tab → Service Workers to verify activation.
+    3. Audit: Confirm Service Worker is active for offline mode.
