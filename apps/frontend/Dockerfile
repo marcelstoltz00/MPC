@@ -1,3 +1,5 @@
+
+
 # ==========================================
 # Stage 1: Builder
 # ==========================================
@@ -8,11 +10,11 @@ COPY package.json yarn.lock ./
 
 COPY packages ./packages
 
-COPY apps/backend ./apps/backend
+COPY apps/frontend ./apps/frontend
 
 RUN yarn install --frozen-lockfile
 
-RUN yarn --cwd apps/backend build
+RUN yarn --cwd apps/frontend build
 
 # ==========================================
 # Stage 2: Runner
@@ -22,14 +24,12 @@ WORKDIR /app
 
 ENV NODE_ENV=production
 
-COPY package.json yarn.lock ./
-
+# Copy the built frontend app and its node_modules from builder
+COPY --from=builder /app/apps/frontend ./apps/frontend
 COPY --from=builder /app/node_modules ./node_modules
 COPY --from=builder /app/packages ./packages
+COPY package.json yarn.lock ./
 
-COPY --from=builder /app/apps/backend/package.json ./apps/backend/
-COPY --from=builder /app/apps/backend/dist ./apps/backend/dist
+EXPOSE 3000
 
-EXPOSE 3001
-
-CMD ["yarn", "--cwd", "apps/backend", "start:prod"]
+CMD ["yarn", "--cwd", "apps/frontend", "start"]
