@@ -4,7 +4,7 @@
 /apps/frontend/src/domains/user/      @Megan235
 /apps/frontend/src/domains/accounts/  @CailinSmith
 /apps/frontend/src/domains/services/  @Ayush-B99
-/apps/frontend/src/domains/dispatch/  @marcelstolt00
+/apps/frontend/src/domains/dispatch/  @marcelstoltz00
 /apps/frontend/src/domains/fieldops/  @g3rard-j
 # ----------------------------------------
 # BACKEND DOMAIN OWNERSHIP
@@ -12,5 +12,5 @@
 /apps/backend/src/user/               @Megan235
 /apps/backend/src/accounts/           @CailinSmith
 /apps/backend/src/services/           @Ayush-B99
-/apps/backend/src/dispatch/           @marcelstolt00
+/apps/backend/src/dispatch/           @marcelstoltz00
 /apps/backend/src/fieldops/           @g3rard-j

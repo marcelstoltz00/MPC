@@ -13,7 +13,7 @@ npm install -g yarn
 
 ## Step 2: Install Dependencies
 
-Open your terminal, navigate to the root directory (`/misp-repo`), and run:
+Open your terminal, navigate to the root directory, and run:
 
 ```bash
 yarn install
@@ -23,7 +23,7 @@ yarn install
 
 ## Step 3: Add `.env` Files
 
-You need three separate `.env` files: one in the root, one in the backend, and one in the frontend. Run the following command from the root directory (`/misp-repo`):
+You need three separate `.env` files: one in the root, one in the backend, and one in the frontend. Run the following command from the root directory:
 
 ```bash
 cp .env.example .env && cp apps/backend/.env.example apps/backend/.env && cp apps/frontend/.env.example apps/frontend/.env
@@ -31,9 +31,9 @@ cp .env.example .env && cp apps/backend/.env.example apps/backend/.env && cp app
 
 If that command does not work on your system (e.g., standard Windows Command Prompt), manually create a file named `.env` in these three folders:
 
-- `/misp-repo/`
-- `/misp-repo/apps/backend/`
-- `/misp-repo/apps/frontend/`
+ - `/`
+ - `/apps/backend/`
+ - `/apps/frontend/`
 
 Ask for the specific `.env` values on the Discord server.
 
@@ -44,7 +44,7 @@ Ask for the specific `.env` values on the Discord server.
 
 ## Step 4: Run the Web App
 
-Open your terminal in the root directory (`/misp-repo`) and run these commands (it is best to use separate terminal tabs for each):
+Open your terminal in the root directory and run these commands (it is best to use separate terminal tabs for each):
 
 ### 4.1) Start the Database
 
@@ -83,7 +83,7 @@ docker-compose down
 # 🏗 Project Structure
 
 ```
-misp-repo/
+
 ├── apps/
 │   ├── backend/                  # NestJS Application
 │   │   ├── src/
@@ -190,8 +190,3 @@ yarn workspace backend migration:revert
 
 ---
 
-## Rules for the Team
-
-- **Never edit the database manually:** Always use migrations.
-- **Check your migration before committing:** Open the generated file and make sure it only contains the changes you intended.
-- **Team Prefixes:** To avoid conflicts, name your tables with your team prefix (e.g., `@Entity('dispatch_orders')` or `@Entity('accounts_profile')`).
