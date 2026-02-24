@@ -79,6 +79,75 @@ docker-compose down
 
 ---
 
+
+# 🏗 Project Structure
+
+```
+misp-repo/
+├── apps/
+│   ├── backend/                  # NestJS Application
+│   │   ├── src/
+│   │   │   ├── app.controller.ts
+│   │   │   ├── app.module.ts
+│   │   │   ├── app.service.ts
+│   │   │   ├── env.validation.ts # Zod validation for backend envs
+│   │   │   ├── main.ts
+│   │   │   ├── user/             # User team
+│   │   │   ├── accounts/         # Accounts team
+│   │   │   ├── services/         # Services team
+│   │   │   ├── dispatch/         # Dispatch team
+│   │   │   └── fieldops/         # FieldOps team
+│   │   ├── test/
+│   │   ├── package.json
+│   │   └── .env.example
+│   ├── frontend/                 # Next.js Application
+│   │   ├── app/
+│   │   │   ├── globals.css
+│   │   │   ├── layout.tsx
+│   │   │   └── page.tsx
+│   │   ├── src/
+│   │   │   ├── env.ts            # Zod validation for frontend envs
+│   │   │   └── domains/
+│   │   │       ├── user/         # User team
+│   │   │       ├── accounts/     # Accounts team
+│   │   │       ├── services/     # Services team
+│   │   │       ├── dispatch/     # Dispatch team
+│   │   │       └── fieldops/     # FieldOps team
+│   │   │   └── ...               # Other frontend modules
+│   │   ├── public/
+│   │   ├── package.json
+│   │   └── .env.example
+│   ├── field-ops-pwa/            # FieldOps Progressive Web App
+│   │   ├── public/
+│   │   ├── package.json
+│   │   ├── next.config.mjs
+│   │   └── ...                   # PWA source files
+│
+├── packages/                     # 📦 SHARED MONOREPO CODE
+│   ├── ui/                       # Reusable React components (Buttons, Layouts)
+│   │   ├── src/
+│   │   │   ├── button.tsx
+│   │   │   ├── card.tsx
+│   │   │   └── code.tsx
+│   │   └── package.json
+│   ├── typescript-config/        # Shared TypeScript configs
+│   │   ├── base.json
+│   │   ├── nextjs.json
+│   │   └── react-library.json
+│   ├── eslint-config/            # Shared linting rules
+│   │   ├── base.js
+│   │   ├── next.js
+│   │   └── react-internal.js
+│   │   └── package.json
+│
+├── docker-compose.yml            # Local Postgres & pgAdmin setup
+├── package.json                  # Root package
+├── README.md                     # Project documentation
+└── .github/
+    └── CODEOWNERS                # Pull Request approval enforcement
+```
+---
+
 # TypeORM and Migrations Guide
 
 ## What are Migrations?
